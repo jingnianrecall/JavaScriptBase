@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1">
+    <title>index</title>
+    <script type="text/javascript">
+        var arr = [6, 4, 1, 8, 2, 11, 23];
+
+        function max(prev, next) {
+            return Math.max(prev, next);
+        }
+
+        debugger
+        var arr = [6, 4, 1, 8, 2, 11, 23];
+
+        var arr = [6, 4, 1, 8, 2, 11, 23];
+        console.log(Math.max(...arr))
+        console.log(arr.reduce(max));
+
+        let arr = [{ val: 1 }, { val: 2 }];
+        let message = `
+                <ul>
+                        ${arr.map((item) => {
+            return `
+                                    <li>${item.value}</li>
+                        })}
+                </ul>
+        `;
+            console.log(message)
+
+            let func = value => value;
+            let func = (value, num) => value * num;
+    </script>
+</head>
+
+<body>
+    <style>
+        p {
+            background: red;
+            color: #000;
+            position: absolute;
+        }
+    </style>
+
+    <div>
+        <span>11111</span>
+        <p>2222</p>
+        <span>3333</span>
+    </div>
+</body>
+
+</html>

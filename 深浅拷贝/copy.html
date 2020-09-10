@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1">
+    <title>深浅拷贝</title>
+    <script type="text/javascript">
+      var shallowCopy = function(obj) {
+        // 1 判断是不是对象
+        if (typeof obj !== 'object') return;
+        // 2 创建新对象
+        let newObj = obj instanceof Array ? [] : {}
+        // 3 复制对象
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                newObj[key] = obj[key]
+            }
+        }
+        
+        return newObj;
+      }
+
+      var objA = [1, 4, 'r', 'we', [11, '2w']]
+
+      console.log(shallowCopy(objA))
+
+      var deepCopy = function(obj) {
+        if (typeof obj !== 'object') return;
+        let newObj = obj instanceof Array ? [] : {};
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key]
+            }
+        }
+        return newObj
+      }
+
+      let objB = [1, 4, 'r', 'we', [11, '2w'], {a: 1}]
+
+      let deepObj = deepCopy(objB)
+
+      objB[4][0] = 'new';
+
+      console.log(objB)
+      console.log(deepObj)
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

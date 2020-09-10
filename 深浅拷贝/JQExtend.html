@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1">
+    <title>jQuery的extend</title>
+    <script type="text/javascript">
+        /*
+        extend 第一版
+        // 1 定义key(name) parm参数对象 参数值
+        // 2取到目标对象
+        // 3循环argments
+        */
+        function extendV1() {
+            debugger
+            let name, options, src, copyVal;
+
+            let target = arguments[0]
+
+            for (let i = 1; i < arguments.length; i++){
+                const options = arguments[i];
+                if (options != null) {
+                    for (const name in options) {
+                        if (options.hasOwnProperty(name)) {
+                            // const src = target[name];
+                            const copyVal = options[name];
+                            if (copyVal != undefined) {
+                                target[name] = copyVal
+                            }
+                        }
+                    }
+                }
+            }
+
+            return target
+        }
+        var obj1 = {
+            a: 1,
+            b: { b1: 1, b2: 2 }
+        };
+
+        var obj2 = {
+            b: { b1: 3, b3: 4 },
+            c: 3
+        };
+
+        var obj3 = {
+            d: 4
+        }
+
+        // console.log(extendV1(obj1, obj2, obj3));
+
+        /*
+        *  extend 第二版（深拷贝）
+        *  1、需要根据第一个参数的类型，确定target和要合并的对象的下标起始值
+        *  2、如果是深拷贝，根据 copy 的类型递归extend
+        */
+       function extendV2() {
+           // 不传参数默认不开启深拷贝
+           let deep = false;
+           let name, options, src, copy;
+           
+           let i = 1;
+           let length = arguments.length;
+
+           let target = arguments[0] || {}
+
+           if (typeof target === 'boolean') {
+                deep = target;
+                target = arguments[i] || {}
+                i++;
+           }
+
+           if (typeof target !== "object") {
+               target = {};
+           }
+
+           for (;i < length; i++) {
+               options = arguments[i]
+               if (options != null) {
+                   for (const name in options) {
+                       if (options.hasOwnProperty(name)) {
+                           const src = target[name];
+                           const copy = options[name];
+                           
+                           if (deep && copy && typeof copy === 'object') {
+                               target[name] = extendV2(deep, src, copy)
+                           } else if (copy !== undefined){
+                               target[name] = copy
+                           }
+                       }
+                   }
+               }
+           }
+
+           return target
+       }
+       var a = {name : b};
+var b = {name : a}
+var c = extendV2(a, b);
+console.log(c);
+       console.log(extendV2(true, obj1, obj2, obj3));
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

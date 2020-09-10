@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <button onclick="Test()">测试</button>
+    </body>
+</html>
+
+<script>
+
+    // call模拟实现
+    // Function.prototype.call2 = function(context) {
+    //     debugger
+
+    //     var context = context || window
+    //     //获取调用call的方法，this可以获取
+    //     context.fn = this
+
+    //     var args = []
+
+    //     for(var i = 1, len = arguments.length;i < len; i++) {
+    //         args.push('arguments[' + i + ']')
+    //     }
+    //     var result = eval('context.fn(' + args + ')');
+
+    //     // context.fn()
+    //     delete context.fn
+
+    //     return result
+    // }
+
+    // apply 模拟实现
+    Function.prototype.apply2 = function (context, arr) {
+        var context = Object(context) || window
+        context.fn = this;
+
+        var result;
+        if (!arr) {
+            result = context.fn()
+        }
+        else {
+            var args = [];
+            for (var i = 0, len = arr.length;i < len; i++) {
+                args.push('arr[' + i + ']');
+            }
+            result = eval('context.fn(' + args + ')')
+        }
+
+        delete context.fn
+        return result
+    }
+
+    function Test() {
+
+        var value = 2
+
+        var foo = {
+            value: 1
+        }
+
+        function bar(name, age) {
+            console.log(this.value)
+            return {
+                value: this.value,
+                name: name,
+                age: age
+            }
+        }
+
+        // bar.call(null)
+
+        // bar.call(foo, 'xiaoyao', 19)
+        // console.log(bar.call2(foo, 'xiaoyao', 19))
+        console.log(bar.apply2(foo, ['xiaoyao', 19]))
+    }
+
+</script>
